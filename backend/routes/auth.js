@@ -9,7 +9,7 @@ const fetchuser = require('../middleware/fetchuser.js');
 const JWT_SECRET = "Harryisagood$boy";
 
 
-//route 1
+//route 1 to create user
 router.post('/createuser', [
     body('name', 'Enter valid name').isLength({ min: 3 }),
     body('email', 'Enter valid Email').isEmail(),
