@@ -10,18 +10,21 @@ import {
 import Navbar from './components/Navbar1.js'
 import { Home } from './components/Home.js';
 import { About } from './components/About.js'
+import NoteState from './context/notes/NoteState.js';
 
 function App() {
   return (
     <>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          {/* <Route path="/users" element={<Users />} /> */}
-        </Routes>
-      </Router>
+      <NoteState>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            {/* <Route path="/users" element={<Users />} /> */}
+          </Routes>
+        </Router>
+      </NoteState>
     </>
   );
 }
