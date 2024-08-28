@@ -5,7 +5,7 @@ const Noteitem = (props) => {
     return (
 
         <div className="col-md-3">
-            <div class="card">
+            <div class="card my-2">
                 <div class="card-body">
                     <h5 class="card-title">{note.title}</h5>
                     <p class="card-text">{note.description}</p>
