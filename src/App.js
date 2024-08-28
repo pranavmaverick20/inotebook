@@ -18,11 +18,13 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            {/* <Route path="/users" element={<Users />} /> */}
-          </Routes>
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              {/* <Route path="/users" element={<Users />} /> */}
+            </Routes>
+          </div>
         </Router>
       </NoteState>
     </>

@@ -11,5 +11,5 @@ app.use('/api/notes', require('./routes/notes.js'));
 
 
 app.listen(5000, () => {
-    console.log("Listening on 5000");
+    console.log("iNoteBook backend listening on 5000");
 })
