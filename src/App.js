@@ -11,6 +11,7 @@ import Navbar from './components/Navbar1.js'
 import { Home } from './components/Home.js';
 import { About } from './components/About.js'
 import NoteState from './context/notes/NoteState.js';
+import Alert from './components/Alert.js'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
+          <Alert />
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />} />

@@ -4,16 +4,21 @@ import NoteItem from './Noteitem'
 const Notes = () => {
 
     const context = useContext(contextValue);
-    const { notes, setNotes } = context;
+    const { notes, addNote } = context;
     return (
         <div>Notessssssssss
-            <div className="row my-3">
+            <div className="my-3 mx-2">
                 <h2>Your Notes</h2>
-                {
-                    notes.map((note) => {
-                        return <NoteItem note={note} />
-                    })
-                }
+                <div className="d-flex flex-wrap">
+                    {
+                        notes.map((note) => {
+
+                            return (
+                                <NoteItem key={note._id} note={note} />
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
 
