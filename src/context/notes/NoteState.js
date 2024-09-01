@@ -2,114 +2,85 @@ import { useState } from 'react'
 import NoteContext from './noteContext'
 
 const NoteState = (props) => {
-
-    const notesInitial = [
-        {
-            "_id": "61322f119553781a8a8d006",
-            "user": "6131d534037d4734a066",
-            "title": "My Title 1",
-            "description": "Please wake up early",
-            "tag": "personal",
-            "date": "2021-09-03T14:20:09.5092",
-            "__v": "0"
-        },
-        {
-
-            "_id": "613222f19553781a8ca8d0e08",
-            "user": "6131d53e4037cd4734a066",
-            "title": "My Title 2",
-            "description": "Please wake up early",
-            "tag": "personal",
-            "date": "2021-09-03T14:20:09.668Z",
-            "__v": 0
-        },
-        {
-
-            "_id": "613232f19553781a8ca8d0e08",
-            "user": "6131d53e4037cd4734a066",
-            "title": "My Title 3",
-            "description": "Please wake up early",
-            "tag": "personal",
-            "date": "2021-09-03T14:20:09.668Z",
-            "__v": 0
-        },
-        {
-
-            "_id": "61322f194553781a8ca8d0e08",
-            "user": "6131d53e4037cd4734a066",
-            "title": "My Title 4",
-            "description": "Please wake up early",
-            "tag": "personal",
-            "date": "2021-09-03T14:20:09.668Z",
-            "__v": 0
-        },
-        {
-
-            "_id": "61322f195553781a8ca8d0e08",
-            "user": "6131d53e4037cd4734a066",
-            "title": "My Title 5",
-            "description": "Please wake up early",
-            "tag": "personal",
-            "date": "2021-09-03T14:20:09.668Z",
-            "__v": 0
-        },
-        {
-
-            "_id": "61322f195563781a8ca8d0e08",
-            "user": "6131d53e4037cd4734a066",
-            "title": "My Title 6",
-            "description": "Please wake up early",
-            "tag": "personal",
-            "date": "2021-09-03T14:20:09.668Z",
-            "__v": 0
-        },
-        {
-
-            "_id": "61322f195753781a8ca8d0e08",
-            "user": "6131d53e4037cd4734a066",
-            "title": "My Title 7",
-            "description": "Please wake up early",
-            "tag": "personal",
-            "date": "2021-09-03T14:20:09.668Z",
-            "__v": 0
-        }
-    ]
-
-
+    const host = 'http://localhost:5000';
+    const notesInitial = []
 
     const [notes, setNotes] = useState(notesInitial)
 
+    const getNotes = async () => {
+        const response = await fetch(`${host}/api/notes/fetchallnotes`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token')
+
+            }
+        })
+        const json = await response.json();
+        console.log(json);
+        setNotes(json);
+    }
+
 
     //add note
-    const addNote = (title, description, tag) => {
+    const addNote = async (title, description, tag) => {
         //TO DO API CALL
-        console.log("Adding a new note");
-        const note = {
-
-            "_id": "61322f19553781a8ca8d0e08",
-            "user": "6131d53e4037cd4734a066",
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "date": "2021-09-03T14:20:09.668Z",
-            "__v": 0
-        };
+        const response = await fetch(`${host}/api/notes/addnote`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token')
+            },
+            body: JSON.stringify({ title, description, tag })
+        });
+        const note = await response.json();
         setNotes(notes.concat(note));
     }
-    //delete note
-    const deleteNote = (id) => {
+    //delete notes
+    const deleteNote = async (id) => {
         console.log("Deleting an node with id" + id);
         const newNotes = notes.filter((note) => note._id != id);
-        setNotes(newNotes)
+        setNotes(newNotes);
+        const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+            method: 'DElETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token')
+            }
+        })
+        const json = await response.json();
+        console.log(json);
+
     }
-    const editNote = () => {
+    const editNote = async (id, title, description, tag) => {
+
+        const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('token')
+            },
+            body: JSON.stringify({ title, description, tag })
+        })
+        let newNotes = JSON.parse(JSON.stringify(notes));
+
+        for (let i = 0; i < newNotes.length; i++) {
+            let element = newNotes[i];
+            if (element._id === id) {
+                newNotes[i].title = title;
+                newNotes[i].description = description;
+                newNotes[i].tag = tag;
+                break;
+            }
+        }
+        setNotes(newNotes);
 
     }
 
     //edit a note
 
     return (
-        <NoteContext.Provider value={{ notes, setNotes, addNote, deleteNote, editNote }}>
+        <NoteContext.Provider value={{ notes, setNotes, addNote, deleteNote, editNote, getNotes }}>
             {props.children}
         </NoteContext.Provider>
     )

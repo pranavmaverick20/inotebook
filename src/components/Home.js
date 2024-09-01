@@ -3,11 +3,11 @@ import Notes from './Notes'
 import AddNote from './AddNote'
 
 
-export const Home = () => {
+export const Home = (props) => {
     return (
         <div >
-            <AddNote />
-            <Notes />
+            <AddNote showAlert={props.showAlert} />
+            <Notes showAlert={props.showAlert} />
         </div>
     )
 }
