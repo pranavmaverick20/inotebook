@@ -12,6 +12,6 @@ app.use('/api/auth', require('./routes/auth.js'));
 app.use('/api/notes', require('./routes/notes.js'));
 
 
-app.listen(5000, () => {
-    console.log("iNoteBook backend listening on 5000");
+app.listen(5001, () => {
+    console.log("iNoteBook backend listening on 5001");
 })

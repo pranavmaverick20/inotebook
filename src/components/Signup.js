@@ -15,7 +15,7 @@ export const Signup = (props) => {
         console.log("Submitting form with:", { name, email, password });
 
         e.preventDefault();
-        const response = await fetch("http://localhost:5000/api/auth/createuser", {
+        const response = await fetch("http://localhost:5001/api/auth/createuser", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
